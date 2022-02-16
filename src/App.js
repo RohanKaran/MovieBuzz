@@ -1,10 +1,19 @@
 import './App.css';
-import {Component, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import {Button, Container, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Container,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+  Typography
+} from "@mui/material";
 import MovieList from "./components/movieList";
+import Select from "react-select";
 
 
 function App() {
@@ -49,111 +58,162 @@ function App() {
       mode: 'dark',
     },
   });
+
+  const options = list?.allm.map((props) => {
+  // Ideally you can change the value to something different that is easier to keep track of like the UTC offset
+  return {
+      value: props[0],
+      label: props[2]
+    }
+  }
+);
+
   return (
 
     <ThemeProvider theme={darkTheme}>
       <CssBaseline/>
       <Container>
-        <div className="App">
-          {list && <Carousel
+        <Typography component={'h1'} variant={"h1"}>
+          FilmyBuzz
+        </Typography>
+      </Container>
+      <Container>
+        {list ? <Select
+          options={options}
+          theme={(theme) => ({
+            ...theme,
+            colors: {
+              ...theme.colors,
+              primary: "#FFFF00",
+              primary25: "grey",
+              neutral0: "black",
+              neutral80: "#FFFF008A",
+            },
+          })}
+        /> : <Select/>}
+      </Container>
+
+      <Container className={"all-cont"}>
+        <div>
+          <Typography component={"h1"} variant={"h4"}>
+            Trending Movies
+          </Typography>
+        </div>
+        <div>
+          {list ? <Carousel
             swipeable={true}
             draggable={true}
             showDots={false}
             responsive={responsive}
             ssr={true} // means to render carousel on server-side.
             infinite={true}
-            autoPlay={false}
+            autoPlay={true}
             keyBoardControl={true}
             arrows={false}
-            customTransition="transform 500ms ease-in-out"
-            transitionDuration={500}
+            customTransition="transform 2000ms ease-in"
+            autoPlaySpeed={5000}
             containerClass="carousel-container"
             itemClass="carousel-item-padding-40-px"
           >
             {list.trm?.map(data =>
-              <Button style={{height:"inherit", width:"auto"}}>
+              <Button className={"all"}>
                 <MovieList movie={data}/>
               </Button>
             )
             }
-          </Carousel>}
+          </Carousel> : <div><CircularProgress /></div> }
         </div>
       </Container>
-      <Container>
-        <div className="App">
-          {list && <Carousel
+      <Container className={"all-cont"}>
+        <div>
+          <Typography component={"h1"} variant={"h4"}>
+            Trending Webseries
+          </Typography>
+        </div>
+        <div>
+          {list ? <Carousel
             swipeable={true}
             draggable={true}
             showDots={false}
             responsive={responsive}
             ssr={true} // means to render carousel on server-side.
             infinite={true}
-            autoPlay={false}
+            autoPlay={true}
             keyBoardControl={true}
-            customTransition="transform 500ms ease-in-out"
-            transitionDuration={500}
+            customTransition="transform 2000ms ease-in"
+            autoPlaySpeed={5000}
             itemClass="carousel-item-padding-40-px"
             arrows={false}
           >
             {list.trs?.map(data =>
-              <Button style={{height:"inherit", maxWidth:"10rem", minWidth:'10rem'}}>
+              <Button className={"all"}>
                 <MovieList movie={data}/>
               </Button>
             )
             }
-          </Carousel>}
+          </Carousel> : <div><CircularProgress /></div>}
         </div>
       </Container>
-      <Container>
-        <div className="App">
-          {list && <Carousel
+
+      <Container className={"all-cont"}>
+        <div>
+          <Typography component={"h1"} variant={"h4"}>
+            Popular Movies
+          </Typography>
+        </div>
+        <div>
+          {list ? <Carousel
             swipeable={true}
             draggable={true}
             showDots={false}
             responsive={responsive}
             ssr={true} // means to render carousel on server-side.
             infinite={true}
-            autoPlay={false}
+            autoPlay={true}
             keyBoardControl={true}
             arrows={false}
-            customTransition="transform 500ms ease-in-out"
-            transitionDuration={500}
+            customTransition="transform 2000ms ease-in"
+            autoPlaySpeed={5000}
             containerClass="carousel-container"
             itemClass="carousel-item-padding-40-px"
           >
             {list.tm?.map(data =>
-              <Button style={{height:"inherit", width:"auto"}}>
+              <Button className={"all"}>
                 <MovieList movie={data}/>
               </Button>
             )
             }
-          </Carousel>}
+          </Carousel> : <div><CircularProgress /></div>}
         </div>
       </Container>
-      <Container>
-        <div className="App">
-          {list && <Carousel
+
+      <Container className={"all-cont"}>
+        <div>
+          <Typography component={"h1"} variant={"h4"}>
+            Popular Webseries
+          </Typography>
+        </div>
+        <div>
+          {list ? <Carousel
             swipeable={true}
             draggable={true}
             showDots={false}
             responsive={responsive}
             ssr={true} // means to render carousel on server-side.
             infinite={true}
-            autoPlay={false}
+            autoPlay={true}
             keyBoardControl={true}
             arrows={false}
-            customTransition="transform 500ms ease-in-out"
-            transitionDuration={500}
-            containerClass="carousel-container"
-            itemClass="carousel-item-padding-40-px"
+            customTransition="transform 2000ms ease-in"
+            autoPlaySpeed={5000}
           >
             {list.ts?.map(data =>
-              <Button style={{height:"inherit", width:"auto"}}>
+              <Button className={"all"}>
                 <MovieList movie={data}/>
               </Button>
             )
             }
-          </Carousel>}
+          </Carousel> : <div><CircularProgress /></div>}
         </div>
       </Container>
     </ThemeProvider>

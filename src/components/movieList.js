@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Typography} from "@mui/material";
+import {CircularProgress, Rating, Typography} from "@mui/material";
 
 const TMDB_KEY = process.env.REACT_APP_TMDB_API_KEY
 const POSTER_ROOT = process.env.REACT_APP_TMDB_POSTER
+
 class MovieList extends Component {
   constructor(props) {
     super(props);
@@ -33,43 +34,49 @@ class MovieList extends Component {
         overview = js[jsKey][0]["overview"]
         rating = js[jsKey][0]["vote_average"]
         poster_path = js[jsKey][0]["poster_path"]
-        if (js[jsKey][0]["backdrop_path"].length !== 0) {
+        if (js[jsKey][0]["backdrop_path"] !== null) {
           backdrop_path = js[jsKey][0]["backdrop_path"]
         }
       }
     }
-    data =  [title, overview, release_date, rating, poster_path, backdrop_path]
+    data =  [title, rating, overview, release_date,  poster_path, backdrop_path]
     this.setState({ arr: data });
   }
+
 
   render() {
     const {arr} = this.state
     return (
       <>
-        <div >
-          {arr &&
+        <div>
+          {arr ?
             <div style={{height:"auto", width:"150px"}}>
-              <img src={POSTER_ROOT + arr[4]} width={"100%"} height={"200px"} alt={'poster'}/>
-              <div align={'left'}>
-                <Typography component={"text"} color={"whitesmoke"}>
+              {/*POSTER_ROOT + arr[4]*/}
+              <div>
+                <img src={'download.jpg'} width={"100%"} height={"200px"} alt={'poster'}/>
+              </div>
+
+              <div align={'left'} style={{position:"relative"}}>
+                <Rating name="half-rating-read" defaultValue={(arr[1] * 1.0 )/ 2} precision={0.5} readOnly>
+
+                </Rating>
+                <Typography component={"h6"} color={"whitesmoke"} variant={"body2"}>
                   {arr[0]}
                 </Typography>
+                <div style={{}}>
+
+                  <Typography component={"h6"} color={"whitesmoke"} variant={"body2"}>
+
+                  </Typography>
+                </div>
               </div>
-            </div>
+            </div> :
+            <div><CircularProgress /></div>
           }
           </div>
       </>
     )
   }
-
-  // <>
-      //   {arr && <div style={{height: "100px", width: "auto"}}>
-      //
-      //   </div>}
-      //   <div>
-      //     poster
-      //   </div>
-      // </>
 }
 
 export default MovieList
