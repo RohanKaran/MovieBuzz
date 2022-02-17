@@ -1,10 +1,11 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import {
-  Button,
   CircularProgress,
   Container,
   createTheme,
@@ -14,11 +15,16 @@ import {
 } from "@mui/material";
 import MovieList from "./components/movieList";
 import Select from "react-select";
+import SelectedMovie from "./components/SelectedMovie";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation, Scrollbar, A11y, Autoplay} from 'swiper';
 
 
 function App() {
 
   const [list, setList] = useState(null)
+  const [smovie, setSmovie] = useState(null)
+  const [rec, setRec] = useState(null)
 
   useEffect(() => {
     async function fetchData(){
@@ -30,28 +36,12 @@ function App() {
     fetchData()
   }, [])
 
+  async function fetchMovie(props){
+    await axios.post('https://moviebuzz-backend.herokuapp.com/get-recommendations',
+      {"id": props[0].toString(), "tconst": props[1]}
+      ).then(r => setRec(r.data))
+  }
 
-
-
-  const responsive = {
-      superLargeDesktop: {
-        // the naming can be any, depends on you.
-        breakpoint: { max: 4000, min: 3000 },
-        items: 8
-      },
-      desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 6
-      },
-      tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 3.5
-      },
-      mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 2.5
-      }
-    }
 
   const darkTheme = createTheme({
     palette: {
@@ -62,11 +52,21 @@ function App() {
   const options = list?.allm.map((props) => {
   // Ideally you can change the value to something different that is easier to keep track of like the UTC offset
   return {
-      value: props[0],
+      value: props.slice(0, 2),
       label: props[2]
     }
   }
 );
+  const [width, setWidth] = React.useState(window.innerWidth);
+  const breakpoint = 620;
+
+  useEffect(() => {
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+     }, []);
+
+
+
+
 
   return (
 
@@ -77,9 +77,17 @@ function App() {
           FilmyBuzz
         </Typography>
       </Container>
-      <Container>
+      <Container style={{marginBottom:"5rem"}}>
         {list ? <Select
           options={options}
+          placeholder={"Search"}
+          onChange={props => {
+            fetchMovie(props.value).then(() => {
+              setSmovie(null)
+              setSmovie(props.value)
+              console.log(props.value)
+            })
+          }}
           theme={(theme) => ({
             ...theme,
             colors: {
@@ -93,35 +101,46 @@ function App() {
         /> : <Select/>}
       </Container>
 
+      {smovie ?
+        <Container>
+          <SelectedMovie movie={smovie}/>
+        </Container> : <span/>
+      }
+
+      {rec && <Container>
+        Recommendations: <br/>{rec}
+      </Container>}
+
       <Container className={"all-cont"}>
-        <div>
+        <div style={{paddingTop:"10rem"}}>
           <Typography component={"h1"} variant={"h4"}>
             Trending Movies
           </Typography>
         </div>
         <div>
-          {list ? <Carousel
-            swipeable={true}
-            draggable={true}
-            showDots={false}
-            responsive={responsive}
-            ssr={true} // means to render carousel on server-side.
-            infinite={true}
-            autoPlay={true}
-            keyBoardControl={true}
-            arrows={false}
-            customTransition="transform 2000ms ease-in"
-            autoPlaySpeed={5000}
-            containerClass="carousel-container"
-            itemClass="carousel-item-padding-40-px"
-          >
-            {list.trm?.map(data =>
-              <Button className={"all"}>
-                <MovieList movie={data}/>
-              </Button>
-            )
-            }
-          </Carousel> : <div><CircularProgress /></div> }
+          {list ?
+            <Swiper
+              modules={[Navigation,Autoplay, Scrollbar, A11y]}
+              spaceBetween={50}
+              autoplay={{
+                delay: 10000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              slidesPerView={width > breakpoint ? 6 : 3}
+              navigation
+              pagination={{ clickable: true }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log('slide change')}
+            >
+              {list.trm?.map(data =>
+                      <SwiperSlide>
+                        <MovieList movie={data}/>
+                      </SwiperSlide>
+                    )
+              }
+          </Swiper> : <CircularProgress className={"primary-svg"}/>
+          }
         </div>
       </Container>
       <Container className={"all-cont"}>
@@ -131,27 +150,29 @@ function App() {
           </Typography>
         </div>
         <div>
-          {list ? <Carousel
-            swipeable={true}
-            draggable={true}
-            showDots={false}
-            responsive={responsive}
-            ssr={true} // means to render carousel on server-side.
-            infinite={true}
-            autoPlay={true}
-            keyBoardControl={true}
-            customTransition="transform 2000ms ease-in"
-            autoPlaySpeed={5000}
-            itemClass="carousel-item-padding-40-px"
-            arrows={false}
-          >
-            {list.trs?.map(data =>
-              <Button className={"all"}>
-                <MovieList movie={data}/>
-              </Button>
-            )
-            }
-          </Carousel> : <div><CircularProgress /></div>}
+          {list ?
+            <Swiper
+              modules={[Navigation,Autoplay, Scrollbar, A11y]}
+              spaceBetween={50}
+              autoplay={{
+                delay: 10000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              slidesPerView={width > breakpoint ? 6 : 3}
+              navigation
+              pagination={{ clickable: true }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log('slide change')}
+            >
+              {list.trs?.map(data =>
+                      <SwiperSlide>
+                        <MovieList movie={data}/>
+                      </SwiperSlide>
+                    )
+              }
+          </Swiper> : <CircularProgress className={"primary-svg"}/>
+          }
         </div>
       </Container>
 
@@ -162,28 +183,29 @@ function App() {
           </Typography>
         </div>
         <div>
-          {list ? <Carousel
-            swipeable={true}
-            draggable={true}
-            showDots={false}
-            responsive={responsive}
-            ssr={true} // means to render carousel on server-side.
-            infinite={true}
-            autoPlay={true}
-            keyBoardControl={true}
-            arrows={false}
-            customTransition="transform 2000ms ease-in"
-            autoPlaySpeed={5000}
-            containerClass="carousel-container"
-            itemClass="carousel-item-padding-40-px"
-          >
-            {list.tm?.map(data =>
-              <Button className={"all"}>
-                <MovieList movie={data}/>
-              </Button>
-            )
-            }
-          </Carousel> : <div><CircularProgress /></div>}
+          {list ?
+            <Swiper
+              modules={[Navigation,Autoplay, Scrollbar, A11y]}
+              spaceBetween={50}
+              autoplay={{
+                delay: 10000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              slidesPerView={width > breakpoint ? 6 : 3}
+              navigation
+              pagination={{ clickable: true }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log('slide change')}
+            >
+              {list.tm?.map(data =>
+                      <SwiperSlide>
+                        <MovieList movie={data}/>
+                      </SwiperSlide>
+                    )
+              }
+          </Swiper> : <CircularProgress className={"primary-svg"}/>
+          }
         </div>
       </Container>
 
@@ -194,26 +216,29 @@ function App() {
           </Typography>
         </div>
         <div>
-          {list ? <Carousel
-            swipeable={true}
-            draggable={true}
-            showDots={false}
-            responsive={responsive}
-            ssr={true} // means to render carousel on server-side.
-            infinite={true}
-            autoPlay={true}
-            keyBoardControl={true}
-            arrows={false}
-            customTransition="transform 2000ms ease-in"
-            autoPlaySpeed={5000}
-          >
-            {list.ts?.map(data =>
-              <Button className={"all"}>
-                <MovieList movie={data}/>
-              </Button>
-            )
-            }
-          </Carousel> : <div><CircularProgress /></div>}
+          {list ?
+            <Swiper
+              modules={[Navigation,Autoplay, Scrollbar, A11y]}
+              spaceBetween={50}
+              autoplay={{
+                delay: 10000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              slidesPerView={width > breakpoint ? 6 : 3}
+              navigation
+              pagination={{ clickable: true }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log('slide change')}
+            >
+              {list.ts?.map(data =>
+                      <SwiperSlide>
+                        <MovieList movie={data}/>
+                      </SwiperSlide>
+                    )
+              }
+          </Swiper> : <CircularProgress className={"primary-svg"}/>
+          }
         </div>
       </Container>
     </ThemeProvider>

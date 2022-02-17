@@ -2,12 +2,32 @@
   text-align: center;
 }
 
+.svg {
+  fill: yellow !important;
+}
+
+.swiper-button-next, .swiper-button-prev {
+  color: whitesmoke !important;
+  height: 0.1rem !important;
+}
+.MuiRating-root svg {
+  color: yellow !important;
+}
+
+.css-tnaca8-control, .css-1v70twq-control {
+  border-radius: 50px !important;
+}
+
+
 .all {
   padding-left: 0 !important;
   padding-right: 0 !important;
   text-transform: none !important;
 }
 .all-cont {
+  margin-bottom: 2rem;
+}
+.css-q83q73-menu {
   margin-bottom: 2rem !important;
 }
 

@@ -20,26 +20,26 @@ class MovieList extends Component {
   async getTodos() {
     let data
     const link = `https://api.themoviedb.org/3/find/${this.props.movie[1]}?api_key=${TMDB_KEY}&external_source=imdb_id`
-    let js, release_date, title, overview, backdrop_path, poster_path, rating
-    await axios.get(link).then(r => js = JSON.parse(JSON.stringify(r.data)))
+    let js, title, rating, poster_path
+    await axios.get(link).then(r => js = r.data)
     for (const jsKey in js) {
       if (js[jsKey].length !== 0) {
         if (jsKey === "movie_results") {
-          release_date = js[jsKey][0]["release_date"]
+          // release_date = js[jsKey][0]["release_date"]
           title = js[jsKey][0]["title"]
         } else if (jsKey === "tv_results") {
-          release_date = js[jsKey][0]["first_air_date"]
+          // release_date = js[jsKey][0]["first_air_date"]
           title = js[jsKey][0]["name"]
         }
-        overview = js[jsKey][0]["overview"]
+        // overview = js[jsKey][0]["overview"]
         rating = js[jsKey][0]["vote_average"]
         poster_path = js[jsKey][0]["poster_path"]
-        if (js[jsKey][0]["backdrop_path"] !== null) {
-          backdrop_path = js[jsKey][0]["backdrop_path"]
-        }
+        // if (js[jsKey][0]["backdrop_path"] !== null) {
+        //   backdrop_path = js[jsKey][0]["backdrop_path"]
+        // }
       }
     }
-    data =  [title, rating, overview, release_date,  poster_path, backdrop_path]
+    data =  [title, rating, poster_path]
     this.setState({ arr: data });
   }
 
@@ -47,34 +47,26 @@ class MovieList extends Component {
   render() {
     const {arr} = this.state
     return (
-      <>
-        <div>
+        <div style={{width:"inherit"}}>
           {arr ?
-            <div style={{height:"auto", width:"150px"}}>
-              {/*POSTER_ROOT + arr[4]*/}
-              <div>
-                <img src={'download.jpg'} width={"100%"} height={"200px"} alt={'poster'}/>
+            <div style={{width:"inherit"}}>
+              {/**/}
+              <div style={{width:"inherit"}}>
+                <img src={'download.jpg'} style={{width:"inherit"}} alt={'poster'}/>
               </div>
 
               <div align={'left'} style={{position:"relative"}}>
                 <Rating name="half-rating-read" defaultValue={(arr[1] * 1.0 )/ 2} precision={0.5} readOnly>
 
                 </Rating>
-                <Typography component={"h6"} color={"whitesmoke"} variant={"body2"}>
+                <Typography component={"h6"} color={"whitesmoke"} width={"auto"} variant={"body2"}>
                   {arr[0]}
                 </Typography>
-                <div style={{}}>
-
-                  <Typography component={"h6"} color={"whitesmoke"} variant={"body2"}>
-
-                  </Typography>
-                </div>
               </div>
             </div> :
             <div><CircularProgress /></div>
           }
           </div>
-      </>
     )
   }
 }
