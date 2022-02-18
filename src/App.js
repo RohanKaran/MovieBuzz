@@ -6,7 +6,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import {
-  Card,
   CircularProgress,
   Container,
   createTheme,
@@ -41,7 +40,10 @@ function App() {
   async function fetchMovie(props){
     await axios.post('https://moviebuzz-backend.herokuapp.com/get-recommendations',
       {"id": props[0].toString(), "tconst": props[1]}
-      ).then(r => setRec(JSON.parse(r.data)))
+      ).then(r => {
+        setRec(null)
+      setRec(JSON.parse(r.data))
+    })
   }
 
 
@@ -74,13 +76,27 @@ function App() {
 
     <ThemeProvider theme={darkTheme}>
       <CssBaseline/>
-      <Container>
-        <Typography component={'h1'} variant={"h1"}>
-          FilmyBuzz
+      <div style={{background: "black", paddingBottom:"5rem", marginBottom:"2rem"}}>
+        <Container>
+        <Typography component={'h1'} variant={"h2"} style={{paddingTop:"3rem", paddingBottom:"2rem"}}>
+          <span>
+            Filmy
+          </span>
+          <span style={{color:"yellow"}}>
+            Buzz
+          </span>
+
         </Typography>
       </Container>
-      <Container style={{marginBottom:"5rem"}}>
+      <Container>
+        <Typography variant={"h6"}>Search for movies</Typography>
         {list ? <Select
+          maxMenuHeight={250}
+          components={{
+            IndicatorSeparator: () => null,
+            DropdownIndicator: () => null,
+            ScrollBar: () => null
+          }}
           options={options}
           placeholder={"Search"}
           onChange={props => {
@@ -102,25 +118,33 @@ function App() {
           })}
         /> : <Select/>}
       </Container>
+      </div>
+
 
       {smovie ?
-        <Container>
+        <Container id={"smovie"} style={{paddingTop:"5rem", paddingBottom:"4rem"}}>
           <SelectedMovie movie={smovie}/>
         </Container> : <span/>
       }
 
 
       {rec ?
-            <Container className={"all-cont"}>
-        <div style={{paddingTop:"10rem"}}>
+            <Container className={"all-cont"} style={{paddingBottom:"6rem"}}>
+        <div className={"header2"}>
           <Typography component={"h1"} variant={"h4"}>
             Recommendations For You
           </Typography>
+          <div className={"break"}/>
         </div>
         <div>
           {rec && <Grid justify={'center'} container spacing={5}>
             {rec?.map(data =>
-                <Grid item xs={6} sm={2.4} md={2.4}>
+                <Grid
+                  item xs={6} sm={2.4} md={2.4}
+                  onClick={() => fetchMovie(data).then(() => {
+                  setSmovie(null)
+                  setSmovie(data)
+                })}>
                   <RecList movie={data}/>
                 </Grid>
               )}
@@ -130,10 +154,11 @@ function App() {
 
 
       <Container className={"all-cont"}>
-        <div style={{paddingTop:"10rem"}}>
+        <div className={"header2"}>
           <Typography component={"h1"} variant={"h4"}>
             Trending Movies
           </Typography>
+          <div className={"break"}/>
         </div>
         <div>
           {list ?
@@ -152,7 +177,11 @@ function App() {
               onSlideChange={() => console.log('slide change')}
             >
               {list.trm?.map(data =>
-                      <SwiperSlide>
+                      <SwiperSlide
+                  onClick={() => fetchMovie(data).then(() => {
+                  setSmovie(null)
+                  setSmovie(data)
+                })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
                     )
@@ -162,10 +191,11 @@ function App() {
         </div>
       </Container>
       <Container className={"all-cont"}>
-        <div>
+        <div className={"header2"}>
           <Typography component={"h1"} variant={"h4"}>
             Trending Webseries
           </Typography>
+          <div className={"break"}/>
         </div>
         <div>
           {list ?
@@ -184,7 +214,11 @@ function App() {
               onSlideChange={() => console.log('slide change')}
             >
               {list.trs?.map(data =>
-                      <SwiperSlide>
+                      <SwiperSlide
+                  onClick={() => fetchMovie(data).then(() => {
+                  setSmovie(null)
+                  setSmovie(data)
+                })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
                     )
@@ -195,10 +229,11 @@ function App() {
       </Container>
 
       <Container className={"all-cont"}>
-        <div>
+        <div className={"header2"}>
           <Typography component={"h1"} variant={"h4"}>
             Popular Movies
           </Typography>
+          <div className={"break"}/>
         </div>
         <div>
           {list ?
@@ -217,7 +252,11 @@ function App() {
               onSlideChange={() => console.log('slide change')}
             >
               {list.tm?.map(data =>
-                      <SwiperSlide>
+                      <SwiperSlide
+                  onClick={() => fetchMovie(data).then(() => {
+                  setSmovie(null)
+                  setSmovie(data)
+                })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
                     )
@@ -228,10 +267,11 @@ function App() {
       </Container>
 
       <Container className={"all-cont"}>
-        <div>
+        <div className={"header2"}>
           <Typography component={"h1"} variant={"h4"}>
             Popular Webseries
           </Typography>
+          <div className={"break"}/>
         </div>
         <div>
           {list ?
@@ -250,7 +290,11 @@ function App() {
               onSlideChange={() => console.log('slide change')}
             >
               {list.ts?.map(data =>
-                      <SwiperSlide>
+                      <SwiperSlide
+                  onClick={() => fetchMovie(data).then(() => {
+                  setSmovie(null)
+                  setSmovie(data)
+                })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
                     )

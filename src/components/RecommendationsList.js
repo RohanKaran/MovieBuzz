@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {Card, CardActionArea, CardContent, CardMedia, CircularProgress, Rating, Typography} from "@mui/material";
-import {Grid} from "swiper";
 
 const TMDB_KEY = process.env.REACT_APP_TMDB_API_KEY
 const POSTER_ROOT = process.env.REACT_APP_TMDB_POSTER
@@ -48,24 +47,26 @@ class RecList extends Component {
   render() {
     const {arr} = this.state
     return (
-      <div style={{width:"inherit"}}>
+      <div style={{width:"inherit", height:"100%"}}>
       {arr ? <CardActionArea
-        style={{height: "100%", display: "flex", flexDirection: 'column', width:"100%"}}
+        style={{height: "inherit", display: "flex", flexDirection: 'column', width:"100%"}}
       >
-        <Card style={{height: "100%", display: "flex", flexDirection: 'column', width:"100%"}}>
+        <Card style={{height: "inherit", display: "flex", flexDirection: 'column', width:"100%"}}>
+          {/*POSTER_ROOT + arr[2]*/}
           <CardMedia
             image={POSTER_ROOT + arr[2]}
             title={arr[0]}
             style={{paddingTop: '100%', width:"100%"}}
           />
           <CardContent>
-            {/*<Typography gutterBottom variant='h5' component='h2'>*/}
-            {/*  {info.display}*/}
-            {/*</Typography>*/}
+            <Rating defaultValue={(arr[1] * 1.0) / 2} precision={0.5} readOnly/>
+            <Typography gutterBottom variant='h5' component='h2'>
+              {arr[0]}
+            </Typography>
             {/*<Typography>{post.excerpt}</Typography>*/}
           </CardContent>
         </Card>
-      </CardActionArea> : <div/>}
+      </CardActionArea> : <CircularProgress/>}
     </div>
     )
   }
