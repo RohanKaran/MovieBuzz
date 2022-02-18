@@ -6,18 +6,20 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import {
+  Card,
   CircularProgress,
   Container,
   createTheme,
-  CssBaseline,
+  CssBaseline, Grid,
   ThemeProvider,
   Typography
 } from "@mui/material";
-import MovieList from "./components/movieList";
+import MovieList from "./components/MovieList";
 import Select from "react-select";
 import SelectedMovie from "./components/SelectedMovie";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Scrollbar, A11y, Autoplay} from 'swiper';
+import RecList from "./components/RecommendationsList";
 
 
 function App() {
@@ -39,7 +41,7 @@ function App() {
   async function fetchMovie(props){
     await axios.post('https://moviebuzz-backend.herokuapp.com/get-recommendations',
       {"id": props[0].toString(), "tconst": props[1]}
-      ).then(r => setRec(r.data))
+      ).then(r => setRec(JSON.parse(r.data)))
   }
 
 
@@ -107,9 +109,25 @@ function App() {
         </Container> : <span/>
       }
 
-      {rec && <Container>
-        Recommendations: <br/>{rec}
-      </Container>}
+
+      {rec ?
+            <Container className={"all-cont"}>
+        <div style={{paddingTop:"10rem"}}>
+          <Typography component={"h1"} variant={"h4"}>
+            Recommendations For You
+          </Typography>
+        </div>
+        <div>
+          {rec && <Grid justify={'center'} container spacing={5}>
+            {rec?.map(data =>
+                <Grid item xs={6} sm={2.4} md={2.4}>
+                  <RecList movie={data}/>
+                </Grid>
+              )}
+          </Grid>}
+        </div>
+      </Container> : <div/> }
+
 
       <Container className={"all-cont"}>
         <div style={{paddingTop:"10rem"}}>

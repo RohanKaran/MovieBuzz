@@ -52,7 +52,8 @@ class MovieList extends Component {
             <div style={{width:"inherit"}}>
               {/**/}
               <div style={{width:"inherit"}}>
-                <img src={'download.jpg'} style={{width:"inherit"}} alt={'poster'}/>
+                {/*POSTER_ROOT + arr[2]*/}
+                <img src={POSTER_ROOT + arr[2]} style={{width:"inherit"}} alt={'poster'}/>
               </div>
 
               <div align={'left'} style={{position:"relative"}}>
