@@ -206,7 +206,7 @@ function App() {
                       </SwiperSlide>
                     )
               }
-          </Swiper> : <CircularProgress className={"primary-svg"}/>
+          </Swiper> : <div align={"center"}><CircularProgress className={"primary-svg"}/></div>
           }
         </div>
       </Container>
@@ -243,7 +243,7 @@ function App() {
                       </SwiperSlide>
                     )
               }
-          </Swiper> : <CircularProgress className={"primary-svg"}/>
+          </Swiper> : <div align={"center"}><CircularProgress className={"primary-svg"}/></div>
           }
         </div>
       </Container>
@@ -281,7 +281,7 @@ function App() {
                       </SwiperSlide>
                     )
               }
-          </Swiper> : <CircularProgress className={"primary-svg"}/>
+            </Swiper> : <div align={"center"}><CircularProgress className={"primary-svg"}/></div>
           }
         </div>
       </Container>
@@ -319,7 +319,7 @@ function App() {
                       </SwiperSlide>
                     )
               }
-          </Swiper> : <CircularProgress className={"primary-svg"}/>
+          </Swiper> : <div align={"center"}><CircularProgress className={"primary-svg"}/></div>
           }
         </div>
       </Container>
