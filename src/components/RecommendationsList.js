@@ -60,7 +60,7 @@ class RecList extends Component {
           />
           <CardContent>
             <Rating defaultValue={(arr[1] * 1.0) / 2} precision={0.5} readOnly/>
-            <Typography gutterBottom variant='h5' component='h2'>
+            <Typography variant='h6' component='h2'>
               {arr[0]}
             </Typography>
             {/*<Typography>{post.excerpt}</Typography>*/}

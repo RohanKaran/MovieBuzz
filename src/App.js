@@ -67,7 +67,25 @@ function App() {
   useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
      }, []);
+  const styles = {
+    menuList: (base) => ({
+      ...base,
 
+      "::-webkit-scrollbar": {
+        width: "0",
+        height: "0",
+      },
+      "::-webkit-scrollbar-track": {
+        background: "#f1f1f1"
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: "#888"
+      },
+      "::-webkit-scrollbar-thumb:hover": {
+        background: "#555"
+      }
+    })
+}
 
 
 
@@ -91,7 +109,9 @@ function App() {
       <Container>
         <Typography variant={"h6"}>Search for movies</Typography>
         {list ? <Select
-          maxMenuHeight={250}
+          // menuIsOpen
+          styles={styles}
+          maxMenuHeight={200}
           components={{
             IndicatorSeparator: () => null,
             DropdownIndicator: () => null,
