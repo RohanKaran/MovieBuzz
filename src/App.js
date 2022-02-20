@@ -29,10 +29,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData(){
-      await axios.get('https://moviebuzz-backend.herokuapp.com/movies').then(r => {
-        // console.log(r.data)
-        setList(JSON.parse(r.data))
-      })
+      await axios.get('https://moviebuzz-backend.herokuapp.com/movies').then(r => setList(JSON.parse(r.data)))
     }
     fetchData()
   }, [])
@@ -123,7 +120,6 @@ function App() {
             fetchMovie(props.value).then(() => {
               setSmovie(null)
               setSmovie(props.value)
-              console.log(props.value)
             })
           }}
           theme={(theme) => ({
@@ -193,8 +189,6 @@ function App() {
               slidesPerView={width > breakpoint ? 6 : 3}
               navigation
               pagination={{ clickable: true }}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log('slide change')}
             >
               {list.trm?.map(data =>
                       <SwiperSlide
@@ -230,8 +224,6 @@ function App() {
               slidesPerView={width > breakpoint ? 6 : 3}
               navigation
               pagination={{ clickable: true }}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log('slide change')}
             >
               {list.trs?.map(data =>
                       <SwiperSlide
@@ -268,8 +260,6 @@ function App() {
               slidesPerView={width > breakpoint ? 6 : 3}
               navigation
               pagination={{ clickable: true }}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log('slide change')}
             >
               {list.tm?.map(data =>
                       <SwiperSlide
@@ -306,8 +296,6 @@ function App() {
               slidesPerView={width > breakpoint ? 6 : 3}
               navigation
               pagination={{ clickable: true }}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log('slide change')}
             >
               {list.ts?.map(data =>
                       <SwiperSlide
