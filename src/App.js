@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -82,8 +82,10 @@ function App() {
         background: "#555"
       }
     })
-}
-
+  }
+  const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
+  const myRef = useRef(null)
+  const executeScroll = () => scrollToRef(myRef)
 
 
 
@@ -93,18 +95,21 @@ function App() {
       <CssBaseline/>
       <div style={{background: "black", paddingBottom:"5rem", marginBottom:"2rem"}}>
         <Container>
-        <Typography component={'h1'} variant={"h2"} style={{paddingTop:"3rem", paddingBottom:"2rem"}}>
+        <Typography component={'h1'} variant={"h2"}
+                    style={{paddingTop:"3rem", paddingBottom:0, fontFamily:"Lora"}}>
           <span>
             Filmy
           </span>
           <span style={{color:"yellow"}}>
             Buzz
           </span>
-
+        </Typography><Typography component={'h5'} variant={"h5"}
+                    style={{paddingTop:0, paddingBottom:"2rem", fontFamily:"Copse"}}>
+          Movie Recommendations System
         </Typography>
       </Container>
       <Container>
-        <Typography variant={"h6"}>Search for movies</Typography>
+        <Typography component={"h6"} variant={"body1"}>Search for movies</Typography>
         {list ? <Select
           // menuIsOpen
           styles={styles}
@@ -127,7 +132,8 @@ function App() {
             colors: {
               ...theme.colors,
               primary: "#FFFF00",
-              primary25: "grey",
+              primary25: "#FFFF00EE",
+              primary50: "#FFFF00",
               neutral0: "black",
               neutral80: "#FFFF008A",
             },
@@ -138,7 +144,7 @@ function App() {
 
 
       {smovie ?
-        <Container id={"smovie"} style={{paddingTop:"5rem", paddingBottom:"4rem"}}>
+        <Container id={"smovie"} style={{paddingTop:"5rem", paddingBottom:"4rem"}} ref={myRef}>
           <SelectedMovie movie={smovie}/>
         </Container> : <span/>
       }
@@ -158,8 +164,9 @@ function App() {
                 <Grid
                   item xs={6} sm={2.4} md={2.4}
                   onClick={() => fetchMovie(data).then(() => {
-                  setSmovie(null)
-                  setSmovie(data)
+                    setSmovie(null)
+                    setSmovie(data)
+                    executeScroll()
                 })}>
                   <RecList movie={data}/>
                 </Grid>
@@ -191,10 +198,11 @@ function App() {
               pagination={{ clickable: true }}
             >
               {list.trm?.map(data =>
-                      <SwiperSlide
-                  onClick={() => fetchMovie(data).then(() => {
-                  setSmovie(null)
-                  setSmovie(data)
+                  <SwiperSlide
+                    onClick={() => fetchMovie(data).then(() => {
+                    setSmovie(null)
+                    setSmovie(data)
+                    executeScroll()
                 })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
@@ -230,6 +238,7 @@ function App() {
                   onClick={() => fetchMovie(data).then(() => {
                   setSmovie(null)
                   setSmovie(data)
+                    executeScroll()
                 })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
@@ -266,6 +275,7 @@ function App() {
                   onClick={() => fetchMovie(data).then(() => {
                   setSmovie(null)
                   setSmovie(data)
+                    executeScroll()
                 })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
@@ -302,6 +312,7 @@ function App() {
                   onClick={() => fetchMovie(data).then(() => {
                   setSmovie(null)
                   setSmovie(data)
+                    executeScroll()
                 })}>
                         <MovieList movie={data}/>
                       </SwiperSlide>
@@ -311,6 +322,20 @@ function App() {
           }
         </div>
       </Container>
+      <div align={"center"} className={"footer"} style={{padding:'3rem', background:"black"}}>
+        <Typography component={"h6"} variant={"body1"}>
+          © Rohan Karan 2022
+        </Typography>
+        <Typography component={"h6"} variant={"body1"}>
+          Credits: Movie titles, ratings, posters etc are collected from {" "}
+          <img src={"tmdb.svg"} alt={"TMDb"} width={"40rem"} align={"center"}/>
+        </Typography>
+
+        <Typography style={{opacity:"0.8", fontSize:'0.6rem'}}>
+          * Disclaimer: This website uses the TMDb API but is not endorsed or certified by TMDB
+        </Typography>
+
+      </div>
     </ThemeProvider>
   );
 }
