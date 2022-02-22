@@ -4,6 +4,6 @@
 ![API](https://img.shields.io/badge/API-TMDB-darkgreen)
 ![API](https://img.shields.io/badge/Dataset-IMDB-lightyellow)
 # FilmyBuzz
-A content based movie recommendations web app, when a user enters a movie, it recommends similar movies using machine learning. Used FastAPI in backend to make predictions from the model built on Kaggle using Kaggle API. Frontend built with React. 
+A content based movie recommendation web app. Based on the user input, it recommends similar movies/webseries to the user using machine learning. Used FastAPI in backend to make predictions from the model built on Kaggle. Frontend - React.
 
 [View the live app](https://filmybuzz.netlify.app)
