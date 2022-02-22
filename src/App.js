@@ -105,7 +105,7 @@ function App() {
           </span>
         </Typography><Typography component={'h5'} variant={"h5"}
                     style={{paddingTop:0, paddingBottom:"2rem", fontFamily:"Copse"}}>
-          Movie Recommendations System
+          Movie Recommendation System
         </Typography>
       </Container>
       <Container>
