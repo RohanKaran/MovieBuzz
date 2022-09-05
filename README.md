@@ -1,3 +1,4 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fbe0c0c0-d97e-4f73-8a9f-ff651857650d/deploy-status)](https://app.netlify.com/sites/filmybuzz/deploys)
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)
 ![ReactJS](https://img.shields.io/badge/Frontend-ReactJS-blue)
 ![API](https://img.shields.io/badge/API-Kaggle-lightblue)
