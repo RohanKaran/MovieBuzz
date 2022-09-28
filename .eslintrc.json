@@ -1,37 +1,23 @@
 {
-  "root": true,
-  "extends": [
-    "plugin:import/errors",
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb", "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:prettier/recommended"
-  ],
-
+    "airbnb/hooks",
+    "plugin:prettier/recommended"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
   "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/no-danger": "off", // it's self explainatory that no-danger should be used sparingly
     "react/react-in-jsx-scope": "off", // next.js does not require react in most components
     "no-console": "error", // no console statements allowed
     "prettier/prettier": "off" // don't show prettier errors as it will be fixed when saved anyway
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx"]
-      },
-      "babel-module": {
-        "extensions": [".js", ".jsx"],
-        "alias": {
-          "@/components": "./components",
-          "@/styles": "./styles"
-        }
-      }
-    }
-  },
-  "env": {
-    "node": true,
-    "browser": true,
-    "amd": true
   }
 }

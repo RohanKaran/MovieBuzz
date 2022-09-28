@@ -12,15 +12,9 @@
     "@testing-library/user-event": "^14.4.3",
     "axios": "^0.27.2",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^8.24.0",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-babel-module": "^5.3.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.8",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -35,9 +29,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "style:all": "npm run style:lint && npm run style:prettier",
-    "style:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
-    "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
-    "make-pretty": "prettier --write '**/*.{js,jsx,ts,tsx}'"
+    "style:lint": "eslint **/*.{js,jsx,ts,tsx}",
+    "style:prettier": "prettier --check **/*.{js,jsx,ts,tsx}",
+    "make-pretty": "prettier --write **/*.{js,jsx,ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
@@ -56,5 +50,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.18.6",
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

@@ -10,22 +10,21 @@
   color: yellow !important;
 }
 
-.primary-svg{
-
+.primary-svg {
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
 }
 
-.smovie-grid{
+.smovie-grid {
   padding-bottom: 3.2rem !important;
   padding-top: 1rem !important;
-
 }
 .swiper-slide:hover {
   cursor: pointer !important;
 }
 
-.swiper-button-next, .swiper-button-prev {
+.swiper-button-next,
+.swiper-button-prev {
   color: whitesmoke !important;
   height: 0.1rem !important;
 }
@@ -36,7 +35,8 @@
 .select__menu-list::-webkit-scrollbar {
   opacity: 0 !important;
 }
-.css-tnaca8-control, .css-1v70twq-control {
+.css-tnaca8-control,
+.css-1v70twq-control {
   cursor: text !important;
   margin-top: 0.8rem !important;
 }
@@ -75,5 +75,5 @@ h1 {
   width: fit-content;
 }
 
-@media (min-width:620px) {
+@media (min-width: 620px) {
 }
