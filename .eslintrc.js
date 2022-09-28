@@ -1,8 +1,8 @@
 {
-    "env": {
+    "env" : {
         "browser": true
     },
-    "rules": {
+    "rules" : {
         // Override our default settings just for this directory
         "eqeqeq": "warn",
         "strict": "off"
