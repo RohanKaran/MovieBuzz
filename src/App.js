@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get('https://moviebuzz-backend.fly.dev/movies')
+        .get('https://moviebuzz-backend.herokuapp.com/movies')
         .then((r) => setList(JSON.parse(r.data)));
     }
     fetchData();
@@ -39,7 +39,7 @@ function App() {
 
   async function fetchMovie(props) {
     await axios
-      .post('https://moviebuzz-backend.fly.dev/get-recommendations', {
+      .post('https://moviebuzz-backend.herokuapp.com/get-recommendations', {
         id: props[0].toString(),
         tconst: props[1],
       })
