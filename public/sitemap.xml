@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Update <loc> entries with your production domain and full pages as appropriate -->
+  <url>
+    <loc>https://filmybuzz.netlify.app/</loc>
+    <priority>1.00</priority>
+    <changefreq>daily</changefreq>
+  </url>
+  <!-- Example pattern for movie pages if you deploy with pre-rendered movie URLs -->
+  <!--
+  <url>
+    <loc>https://your-domain.example/movie/tt1234567</loc>
+    <priority>0.80</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  -->
+</urlset>
